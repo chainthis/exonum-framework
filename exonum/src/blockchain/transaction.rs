@@ -24,7 +24,7 @@ use serde::Serialize;
 use serde::de::DeserializeOwned;
 
 use messages::{Message, RawTransaction};
-use storage::{Fork, StorageValue};
+use storage::{Fork, StorageValue, Snapshot};
 use crypto::{CryptoHash, Hash};
 use encoding;
 use encoding::serialize::json::ExonumJson;
@@ -144,6 +144,11 @@ pub trait Transaction: Message + ExonumJson + 'static {
     /// }
     /// # fn main() {}
     fn execute(&self, fork: &mut Fork) -> ExecutionResult;
+
+    /// Post transaction to ethereum network
+    fn post(&self, fork: &Snapshot) -> Option<()> {
+        None
+    }
 }
 
 /// Result of unsuccessful transaction execution.
